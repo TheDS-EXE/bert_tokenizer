@@ -1,3 +1,5 @@
-## 1.0.0
+## 1.0.1
+* Fix documentation links and update repository visibility.
 
-- Initial version.
+## 1.0.0
+* Initial release of pure Dart BERT tokenizer.
