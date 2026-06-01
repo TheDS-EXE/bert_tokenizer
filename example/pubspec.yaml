@@ -1,0 +1,10 @@
+name: bert_tokenizer_example
+description: An example demonstrating how to use the pure Dart bert_tokenizer.
+publish_to: 'none'
+
+environment:
+  sdk: '^3.0.0'
+
+dependencies:
+  bert_tokenizer:
+    path: ../

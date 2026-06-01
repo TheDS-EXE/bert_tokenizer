@@ -1,0 +1,15 @@
+name: bert_tokenizer
+description: A lightweight, pure Dart WordPiece tokenizer for BERT NLP models. Completely independent of Flutter.
+version: 1.0.0
+homepage: https://github.com/TheDS-EXE/bert_tokenizer
+repository: https://github.com/TheDS-EXE/bert_tokenizer
+
+environment:
+  sdk: '^3.0.0'
+
+dependencies:
+# No external dependencies needed! Pure Dart power.
+
+dev_dependencies:
+  lints: ^3.0.0
+  test: ^1.24.0
