@@ -1,3 +1,6 @@
+## 1.0.2
+* Update pub.dev visibility.
+
 ## 1.0.1
 * Fix documentation links and update repository visibility.
 

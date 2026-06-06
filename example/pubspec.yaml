@@ -2,6 +2,13 @@ name: bert_tokenizer_example
 description: An example demonstrating how to use the pure Dart bert_tokenizer.
 publish_to: 'none'
 
+topics:
+  - nlp
+  - bert
+  - tokenizer
+  - machine-learning
+  - wordpiece
+
 environment:
   sdk: '^3.0.0'
 

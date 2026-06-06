@@ -1,3 +1,7 @@
+![Dart](https://img.shields.io/badge/Dart-3.0%2B-blue?logo=dart&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97_Hugging_Face-Compatible-orange)
+
 # bert_tokenizer
 
 A lightweight, pure Dart WordPiece tokenizer for BERT and other NLP models.
