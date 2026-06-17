@@ -31,6 +31,12 @@ class BertTokenizer {
     for (int i = 0; i < tokenizer._vocab.length; i++) {
       tokenizer._vocabMap[tokenizer._vocab[i]] = i;
     }
+
+    if (!tokenizer._vocabMap.containsKey(unkToken) ||
+        !tokenizer._vocabMap.containsKey(padToken)) {
+      throw FormatException('Vocabulary must contain "$unkToken" and "$padToken".');
+    }
+
     tokenizer._idsToTokens = List.from(tokenizer._vocab);
     return tokenizer;
   }
@@ -83,19 +89,22 @@ class BertTokenizer {
 
   /// Converts a tokenized sequence into input IDs, mask, and segment IDs.
   BertInput prepareNerInput(String text, int maxLength) {
-    final tokens = tokenize(text);
-    List<String> finalTokens = [clsToken, ...tokens, sepToken];
-    if (finalTokens.length > maxLength) {
-      finalTokens = finalTokens.sublist(0, maxLength);
-      if (finalTokens.last != sepToken) {
-        finalTokens[finalTokens.length - 1] = sepToken;
-      }
+    if (maxLength < 2) {
+      throw ArgumentError('maxLength must be at least 2 to accommodate special tokens.');
     }
 
-    final inputIds =
-        finalTokens.map((t) => _vocabMap[t] ?? _vocabMap[unkToken]!).toList();
+    final tokens = tokenize(text);
 
-    // FIX: Make the mask and segment ID lists growable so we can add padding
+    List<String> truncatedTokens = tokens;
+    if (truncatedTokens.length > maxLength - 2) {
+      truncatedTokens = truncatedTokens.sublist(0, maxLength - 2);
+    }
+
+    List<String> finalTokens = [clsToken, ...truncatedTokens, sepToken];
+
+    final inputIds =
+    finalTokens.map((t) => _vocabMap[t] ?? _vocabMap[unkToken]!).toList();
+
     final attentionMask = List.filled(inputIds.length, 1, growable: true);
     final segmentIds = List.filled(inputIds.length, 0, growable: true);
 

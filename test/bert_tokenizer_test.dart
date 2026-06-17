@@ -33,6 +33,19 @@ un
       // 5 special tokens + 10 words/punctuation = 15
       expect(tokenizer.vocabSize, 15);
     });
+
+    test('Throws FormatException if required tokens are missing', () {
+      const badVocab = '''
+[CLS]
+[SEP]
+hello
+world
+''';
+      expect(
+            () => BertTokenizer.fromStringContent(badVocab),
+        throwsFormatException,
+      );
+    });
   });
 
   group('String Tokenization', () {
@@ -81,7 +94,7 @@ un
       // Text has 5 words. With CLS and SEP, it needs 7 slots.
       // We force a max length of 5.
       final input =
-          tokenizer.prepareNerInput('hello worldwide dart is awesome', 5);
+      tokenizer.prepareNerInput('hello worldwide dart is awesome', 5);
 
       expect(input.inputIds.length, 5);
       expect(input.inputMask.length, 5);
@@ -91,6 +104,25 @@ un
       expect(input.inputIds.last, 3);
       // The first token MUST be [CLS] (ID 2)
       expect(input.inputIds.first, 2);
+    });
+
+    test('Throws ArgumentError if maxLength is less than 2', () {
+      expect(
+            () => tokenizer.prepareNerInput('hello world', 1),
+        throwsArgumentError,
+      );
+
+      expect(
+            () => tokenizer.prepareNerInput('hello world', 0),
+        throwsArgumentError,
+      );
+    });
+
+    test('Truncates to just special tokens when maxLength is 2', () {
+      final input = tokenizer.prepareNerInput('hello worldwide dart', 2);
+
+      expect(input.inputIds.length, 2);
+      expect(input.inputIds, [2, 3]); // [CLS] and [SEP]
     });
   });
 
